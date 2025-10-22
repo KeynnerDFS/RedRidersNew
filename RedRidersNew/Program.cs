@@ -1,4 +1,4 @@
-using ApagarCSS.Components;
+using RedRidersNew.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
