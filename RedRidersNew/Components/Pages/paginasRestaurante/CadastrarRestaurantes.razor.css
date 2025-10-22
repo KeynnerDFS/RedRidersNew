@@ -1,0 +1,64 @@
+/* Container principal */
+#cadastrar-restaurant-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.cadastrar-restaurant-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Arial", sans-serif;
+  color: #333;
+}
+
+/* Formulário */
+#cadastrar-restaurant-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Campos */
+.cadastrar-restaurant-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastrar-restaurant-field label {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.cadastrar-restaurant-field input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.cadastrar-restaurant-field input:focus {
+  border-color: #007bff;
+}
+
+/* Botão */
+#cadastrar-restaurant-button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #5500ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#cadastrar-restaurant-button:hover {
+  background: #6800b3;
+}

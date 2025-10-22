@@ -1,0 +1,96 @@
+/* Seções principais */
+.section {
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Título geral */
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #4b4bb7; /* Roxo principal */
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+/* Grid das opções (restaurante x entregador) */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.option-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.option-card:active {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.option-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.option-text h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.option-text p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Seção de vantagens */
+.marketing-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.aside {
+  background: #f9f9fb; /* Fundo suave */
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.aside h3 {
+  font-size: 1.4rem;
+  color: #4b4bb7;
+  margin-bottom: 1rem;
+  border-left: 4px solid #8a46c5; /* Vermelho contraste */
+  padding-left: 0.5rem;
+}
+
+.aside ul {
+  list-style: none;
+}
+
+.aside ul li {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.75rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.aside ul li::before {
+  content: "✔";
+  color: #4b4bb7;
+  position: absolute;
+  left: 0;
+}

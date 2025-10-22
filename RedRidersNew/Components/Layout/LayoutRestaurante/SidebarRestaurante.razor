@@ -1,0 +1,26 @@
+@rendermode InteractiveServer
+
+<div class="container-sidebar">
+    <aside id="sidebar-restaurant" class="@($"sidebar {(isOpen ? "open" : "closed")}")">
+        <h2 class="sidebar-title">Menu</h2>
+        <nav class="sidebar-nav">
+            <NavLink href="/restaurante/meus-restaurantes" class="nav-link" Match="NavLinkMatch.All">Restaurantes</NavLink>
+            <NavLink href="/cardapio" class="nav-link">Cardápios</NavLink>
+            <NavLink href="/clientes" class="nav-link">Clientes</NavLink>
+            <NavLink href="/entregas" class="nav-link">Entregas</NavLink>
+            <NavLink href="/pedidos" class="nav-link">Pedidos</NavLink>
+            <NavLink href="/feedbacks" class="nav-link">Feedbacks</NavLink>
+            <NavLink href="/perfil" class="nav-link">Perfil</NavLink>
+        </nav>
+    </aside>
+
+    <button @onclick="ToggleSidebar">
+        <img src="https://i.pinimg.com/originals/6f/c5/a5/6fc5a5ebd4cd1457799bf52c38f10936.gif" class="img-sidebar" />
+    </button>
+</div>
+
+@code {
+    private bool isOpen = true;
+
+    private void ToggleSidebar() => isOpen = !isOpen;
+}

@@ -1,0 +1,50 @@
+/* Container principal da navbar */
+#container-navbar-principal {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo + título */
+.container-controller {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.container-controller.logo h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Container de login */
+.container-controller.login img,
+.container-controller.logo img {
+  width: 40px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Botão de login */
+.container-controller.login button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background: #695acd49; /* roxo suave */
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.container-controller.login button:active {
+  background: #6f89ff5d; /* tom mais claro no hover */
+  transform: scale(1.05);
+}

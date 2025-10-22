@@ -1,0 +1,42 @@
+@page "/restaurante/gerenciar-restaurantes"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Gerenciar Restaurantes</PageTitle>
+
+<div class="meus-restaurante">
+    <NavBarRestaurante />
+
+    @* simulação de busca *@
+    <div id="container-gerenciar-restaurantes">
+        <h2 id="titulo-gerenciar">Gerenciar Restaurantes</h2>
+
+        <ul id="lista-restaurantes">
+            <li class="card-restaurante">
+                <img src="https://i.pinimg.com/736x/9a/af/e3/9aafe38556e5d6a23d7749f2555c0368.jpg" alt="Restaurante A"
+                    class="img-restaurante" />
+                <div class="info-restaurante">
+                    <h3>Restaurante A</h3>
+                    <p>Rua Principal, 123</p>
+                </div>
+                <div class="acoes-restaurante">
+                    <button class="btn-deletar">Deletar</button>
+                    <button class="btn-editar">Editar</button>
+                </div>
+            </li>
+
+            <li class="card-restaurante">
+                <img src="https://i.pinimg.com/736x/80/39/ce/8039ce6cc6040de86b42df8105a1a9a9.jpg" alt="Restaurante B"
+                    class="img-restaurante" />
+                <div class="info-restaurante">
+                    <h3>Restaurante B</h3>
+                    <p>Avenida Central, 456</p>
+                </div>
+                <div class="acoes-restaurante">
+                    <button class="btn-deletar">Deletar</button>
+                    <button class="btn-editar">Editar</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

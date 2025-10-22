@@ -1,0 +1,104 @@
+/* Container principal */
+#container-gerenciar-restaurantes {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+#titulo-gerenciar {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Lista */
+#lista-restaurantes {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  width: clamp(900px, 90vw, 300px);
+}
+
+/* Card */
+.card-restaurante {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #c8e0fd5c;
+  border: 1px solid #4b4bb7;
+  border-radius: 12px;
+  padding: 15px;
+  transition: box-shadow 0.3s;
+  flex: 1;
+}
+
+.card-restaurante:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Imagem */
+.img-restaurante {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+/* Info */
+.info-restaurante {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.info-restaurante h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-restaurante p {
+  margin: 5px 0 0;
+  color: #555;
+}
+
+/* Ações */
+.acoes-restaurante {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-deletar,
+.btn-editar {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-deletar {
+  background-color: #4b4bb7d5;
+  color: white;
+}
+
+.btn-editar {
+  background-color: #466ad6cd;
+  color: white;
+}
+
+.btn-deletar:hover {
+  background-color: #4b4bb7;
+}
+
+.btn-editar:hover {
+  background-color: #466ad6;
+}
+
+/* Nenhum restaurante */
+#nenhum-restaurante {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}

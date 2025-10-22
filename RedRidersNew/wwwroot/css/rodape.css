@@ -1,0 +1,29 @@
+.dev-item a {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.dev-item a:hover {
+  color: #ffcc00;
+}
+
+.info-card a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f1f1f1;
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.info-card a:hover {
+  color: #ffcc00;
+}
+
+.info-card a:hover img {
+  filter: grayscale(0);
+}

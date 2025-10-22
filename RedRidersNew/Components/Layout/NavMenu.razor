@@ -1,1 +1,27 @@
-﻿
+﻿@rendermode InteractiveServer
+@inject NavigationManager NavManager;
+
+
+<header>
+    <nav id="container-navbar-principal" style="background: linear-gradient(90deg, #4b4bb7, #182848);">
+        <!-- Logo -->
+        <div class="container-controller logo">
+            <img src="https://i.pinimg.com/736x/fb/8a/85/fb8a85c510acf24b270ba506449eff0b.jpg" alt="Logo" />
+            <h2>RedRiders</h2>
+        </div>
+
+        <!-- Login -->
+        <div class="container-controller login">
+            <img src="https://i.pinimg.com/736x/a8/62/6b/a8626bcd97a2fa3102647f77e9cd693d.jpg" alt="Usuário"
+                style="background-color: #4b4bb7;" />
+            <button @onclick="OnLoginClick">Login</button>
+        </div>
+    </nav>
+</header>
+
+@code {
+    private void OnLoginClick()
+    {
+        NavManager.NavigateTo("/Login");
+    }
+}

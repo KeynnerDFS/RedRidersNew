@@ -1,0 +1,98 @@
+/* === Container principal do footer === */
+.footer-container {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+  padding: 40px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  font-family: Arial, sans-serif;
+  border-top: 2px solid #ffcc00; /* detalhe visual opcional */
+}
+
+/* === Seção de desenvolvedores === */
+.footer-devs {
+  flex: 1 1 300px;
+}
+
+.footer-devs h2 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: normal;
+  opacity: 0.8;
+}
+
+.footer-devs h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #ffcc00; /* destaque */
+}
+
+/* === Lista de desenvolvedores === */
+.dev-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dev-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.dev-item:hover img {
+  border-color: #ffcc00;
+}
+
+/* === Seção de informações === */
+.footer-info {
+  flex: 2 1 500px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.info-card {
+  flex: 1 1 150px;
+}
+
+.info-card h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #ffcc00;
+}
+
+.info-card img {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease-in-out;
+}
+
+/* === Responsividade === */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .footer-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .info-card {
+    width: 100%;
+  }
+}

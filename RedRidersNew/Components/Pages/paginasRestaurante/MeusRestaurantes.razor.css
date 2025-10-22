@@ -1,0 +1,38 @@
+.container-cards-restaurante{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+}
+
+.container-card-restaurante {
+    width: 450px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-card-restaurante img {
+    max-width: 100%;
+    height: auto;
+    filter:brightness(0.90);
+    transition: filter .4s ease-in;
+}
+
+.container-card-restaurante img:hover{
+    filter: brightness(1);
+}
+
+.container-card-restaurante a {
+    background-color: #06063cba;
+    position: absolute;
+    width: 100%;
+    padding: .5rem 1rem;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+}
