@@ -1,0 +1,104 @@
+﻿/* ====== BUSCA ====== */
+.search-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 420px;
+}
+
+    .search-box input {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #c8cbff;
+        background: #eef2ff;
+        font-size: 0.95rem;
+        transition: 0.2s;
+    }
+
+        .search-box input:focus {
+            border-color: #4b4bb7;
+            background: #fff;
+            outline: none;
+        }
+
+    .search-box button {
+        padding: 10px 20px;
+        background: #4b4bb7;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .search-box button:hover {
+            background: #3d3da0;
+        }
+
+
+/* ====== CARD DO CLIENTE ====== */
+.cliente-card {
+    display: flex;
+    gap: 22px;
+    padding: 20px;
+    border: 1px solid #dcdfff;
+    border-radius: 16px;
+    background: #fff;
+    align-items: center;
+}
+
+    /* Foto */
+    .cliente-card img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        object-fit: cover;
+        border: 2px solid #e6e8ff;
+    }
+
+
+/* ====== TABELA ====== */
+.tabela-clientes {
+    width: 100%;
+    border-collapse: collapse;
+    color: #182848;
+    font-size: 0.95rem;
+}
+
+    /* Cabeçalho */
+    .tabela-clientes thead th {
+        text-align: left;
+        font-weight: 600;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #d0d4ff;
+    }
+
+    /* Linhas */
+    .tabela-clientes tbody td {
+        padding: 14px 6px;
+        border-bottom: 1px solid #e3e6ff;
+    }
+
+    /* Última linha sem borda */
+    .tabela-clientes tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Hover suave */
+    .tabela-clientes tbody tr:hover {
+        background: #f5f6ff;
+        transition: 0.2s;
+    }
+
+    /* Links de telefone */
+    .tabela-clientes a {
+        color: #4b4bb7;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        .tabela-clientes a:hover {
+            text-decoration: underline;
+        }

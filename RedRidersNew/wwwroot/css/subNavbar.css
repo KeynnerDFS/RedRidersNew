@@ -1,0 +1,33 @@
+.subNavbar {
+    display: flex;
+    gap: 1.5rem;
+    background: linear-gradient(90deg, #ede7f6, #f3e5f5);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    align-items: center;
+    align-self: center;
+}
+
+.subNavbar a {
+  color: black;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 3px;
+}
+
+.subNavbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background-color: blueviolet;
+  transition: width .4s ease-in-out;
+}
+
+.subNavbar a.active::after {
+  width: 100%;
+}

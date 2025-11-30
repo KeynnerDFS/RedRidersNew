@@ -1,0 +1,43 @@
+﻿@page "/restaurante/gerenciar-cardapios"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Gerenciar Cardapios</PageTitle>
+
+@* editar | adicionar | exluir *@
+
+<div class="sub-container">
+    <NavBarCardapio/>
+ 
+    @* carregamento de cardapios *@
+    <div class="container-principal-cardapios">
+        <button class="add-cardapio">adicionar cardapio</button>
+        @* banco de dados deve carregar os cardapios dentro de grid cardapios*@
+        <section class="grid-cardapios">
+            <div class="card-cardapio">
+                <img src="https://i.pinimg.com/736x/a5/e8/84/a5e884e514b00ad32d6cfaf19f4ee486.jpg" alt="Alternate Text" />
+                <div class="opcoes-cardapio">
+                    <button>editar</button>
+                    <button>visualizar</button>
+                    <button>excluir</button>
+                </div>
+            </div>
+            <div class="card-cardapio">
+                <img src="https://i.pinimg.com/736x/fa/9e/d2/fa9ed24255f5703779af651a2347c2a4.jpg" alt="Alternate Text" />
+                <div class="options-cardapio">
+                    <button>editar</button>
+                    <button>visualizar</button>
+                    <button>excluir</button>
+                </div>
+            </div>
+            <div class="card-cardapio">
+                <img src="https://i.pinimg.com/736x/97/fa/6c/97fa6c7bc2ef7cb8d8797a63727ac460.jpg" alt="Alternate Text" />
+                <div class="options-cardapio">
+                    <button>editar</button>
+                    <button>visualizar</button>
+                    <button>excluir</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

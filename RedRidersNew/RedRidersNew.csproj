@@ -6,4 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Components\Pages\paginasRestaurante\NovaPasta\**" />
+    <Content Remove="Components\Pages\paginasRestaurante\NovaPasta\**" />
+    <EmbeddedResource Remove="Components\Pages\paginasRestaurante\NovaPasta\**" />
+    <None Remove="Components\Pages\paginasRestaurante\NovaPasta\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
+  </ItemGroup>
+
 </Project>

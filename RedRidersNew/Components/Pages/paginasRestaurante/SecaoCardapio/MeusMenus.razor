@@ -1,0 +1,32 @@
+﻿@page "/restaurante/meus-menus"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Meus Menus</PageTitle>
+
+@* aqui vai ser exebido todos os meus cardapios e pratos*@
+<div class="sub-container">
+    <NavBarCardapio />
+
+    @* ao clicar nos pratos ou cardapios vou ser direcionado para uma pagina onde vejo as info*@
+    <section class="secao-cardapios d-grid">
+        <div class="card-body">
+            <img src="https://i.pinimg.com/736x/21/3c/83/213c83789411e62d7287ca10e1a1cbf6.jpg" alt="Alternate Text" class="card-img-top" />
+            <h2 class="h2">prato bom</h2>
+        </div>
+
+        <div class="card-body">
+            <img src="https://i.pinimg.com/736x/21/3c/83/213c83789411e62d7287ca10e1a1cbf6.jpg" alt="Alternate Text" class="card-img-top" />
+            <h2 class="h2">prato bom</h2>
+        </div>
+
+        <div class="card-body">
+            <img src="https://i.pinimg.com/736x/21/3c/83/213c83789411e62d7287ca10e1a1cbf6.jpg" alt="Alternate Text" class="card-img-top" />
+            <h2 class="h2">prato bom</h2>
+        </div>
+    </section>
+
+    <section class="secao-pratos">
+    </section>
+
+</div>

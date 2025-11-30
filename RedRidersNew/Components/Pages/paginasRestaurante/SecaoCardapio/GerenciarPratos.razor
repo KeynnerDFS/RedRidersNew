@@ -1,0 +1,25 @@
+﻿@page "/restaurante/gerenciar-pratos"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Gerenciar Pratos</PageTitle>
+
+<div class="sub-container">
+    <NavBarCardapio />
+
+    @* carregamento de cardapios *@
+    <div class="container-principal-pratos">
+        <button>adicionar pratos</button>
+        @* banco de dados deve carregar os cardapios dentro de grid cardapios*@
+        <section class="grid-pratos">
+            <div class="card-prato">
+                <img src="https://i.pinimg.com/736x/9f/35/fc/9f35fc15070dd7f86a3b20ae96208832.jpg" alt="Alternate Text" />
+                <div class="opcoes-prato">
+                    <button class="bt-group-prato">editar</button>
+                    <button class="bt-group-prato">visualizar</button>
+                    <button class="bt-group-prato">excluir</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

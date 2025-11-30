@@ -20,11 +20,12 @@ li {
   list-style: none;
 }
 
-.meus-restaurante {
+.sub-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
     align-items: center;
+    width: 100%;
     margin-top: 20px;
     flex: 1;
 }
