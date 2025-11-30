@@ -1,35 +1,38 @@
-﻿@page "/restaurante/gerenciar-pratos"
+﻿@page "/restaurante/gerenciar-clientes"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
 
-<PageTitle>Gerenciar Pratos</PageTitle>
+<PageTitle>Gerenciar Clientes</PageTitle>
 
 <div class="container py-4">
 
-    <NavBarCardapio />
+    <NavBarClientes />
 
-    <!-- Botão adicionar prato -->
-    <div class="d-flex justify-content-end mb-4">
-        <button class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
-            <i class="bi bi-plus-circle"></i>
-        </button>
-    </div>
+    <!-- Busca minimalista -->
+    <section class="mb-4">
+        <div class="search-box">
+            <input type="text" placeholder="Pesquisar cliente..." />
+            <button class="btn-search">Buscar</button>
+            <button class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
+    </section>
 
-    <!-- Grid de pratos -->
+    
+
     <div class="row g-4">
-
-        <!-- CARD PRATO -->
-        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+        <div class="col-10 col-sm-8 col-md-4 col-lg-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="position-relative">
 
                     <img class="card-img-top"
-                         src="https://i.pinimg.com/originals/d7/5c/ed/d75cedb1c4b89b6cc78341e24bfa4f03.gif"
-                         alt="Prato" />
+                         src="https://i.pinimg.com/736x/7e/9e/7b/7e9e7b0a91cb2d69b4c2d4c1ec5de332.jpg"
+                         alt="Foto do cliente" />
 
                     <!-- faixa do título -->
                     <div class="titulo-faixa">
-                        Prato 1
+                        cliente 1
                     </div>
 
                 </div>
@@ -53,18 +56,17 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+        <div class="col-10 col-sm-8 col-md-4 col-lg-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="position-relative">
 
                     <img class="card-img-top"
-                         src="https://i.pinimg.com/originals/09/8c/37/098c3726e07d89030c49c9b2564f23dc.gif"
-                         alt="Prato" />
+                         src="https://i.pinimg.com/736x/02/f9/2b/02f92b8d153274f376f17a5a89f6cb70.jpg"
+                         alt="Foto do cliente" />
 
                     <!-- faixa do título -->
                     <div class="titulo-faixa">
-                        Prato 2
+                        cliente 1
                     </div>
 
                 </div>
@@ -88,7 +90,7 @@
                 </div>
             </div>
         </div>
-
     </div>
 
+    
 </div>

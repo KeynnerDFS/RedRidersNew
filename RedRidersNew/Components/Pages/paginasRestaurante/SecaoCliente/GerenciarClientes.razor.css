@@ -1,6 +1,4 @@
-﻿.card-cardapio {
-    height: 20px;
-}
+﻿
 
 /* BOTÕES SUAVES */
 .btn-soft-group .btn {
@@ -42,7 +40,7 @@
     }
 
 .card-img-top {
-    height: 250px; /* controla a altura */
+    height: 190px; /* controla a altura */
     object-fit: cover; /* mantém a imagem bonita */
 }
 
@@ -59,3 +57,41 @@
     text-align: center;
     backdrop-filter: blur(2px); /* efeito suave opcional */
 }
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 420px;
+}
+
+    .search-box input {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #c8cbff;
+        background: #eef2ff;
+        font-size: 0.95rem;
+        transition: 0.2s;
+    }
+
+        .search-box input:focus {
+            border-color: #4b4bb7;
+            background: #fff;
+            outline: none;
+        }
+
+    .search-box .btn-search {
+        padding: 10px 20px;
+        background: #4b4bb7;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .search-box button:hover {
+            background: #3d3da0;
+        }
