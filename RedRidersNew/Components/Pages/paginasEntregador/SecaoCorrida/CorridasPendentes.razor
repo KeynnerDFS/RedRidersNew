@@ -1,0 +1,187 @@
+﻿@page "/entregador/corridas-pendentes"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@layout MainLayoutEntregador
+
+<PageTitle>Corridas Pendentes</PageTitle>
+
+<div class="container py-4">
+    <NavBarCorridas />
+
+    <section class="mb-4">
+        <div class="card p-3 shadow-sm border-0 d-flex">
+
+            <div class="row g-3">
+
+                <!-- Tipo de filtro -->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Filtrar por:</label>
+                    <select class="form-select">
+                        <option value="distancia" selected>Distância</option>
+                        <option value="frete">Frete</option>
+                        <option value="horario">Horário</option>
+                        <option value="tamanho">Tamanho</option>
+                    </select>
+                </div>
+
+                <!-- Ordem -->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Ordem:</label>
+                    <select class="form-select">
+                        <option value="asc" selected>Crescente</option>
+                        <option value="desc">Decrescente</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    @* aqui dentro deve ser buscado todas solicitações de entregas com o status parada ou seila...*@
+    <section class="corridas-lista d-flex flex-wrap gap-3">
+
+        <div class="card card-corrida p-3 shadow-sm border-0">
+
+            <div class="d-flex flex-column gap-3">
+
+        
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/736x/e1/ff/03/e1ff03b0c942464ed8c66f03eedafc08.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <div>
+                    <h5 class="fw-semibold mb-2 text-center">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Estabelecimento:</strong> Restaurante prato bom</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Estabelecimento:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Cliente:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Retirada:</strong> Rua Principal, 123</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Entrega:</strong> Bairro Tucunaré</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Horário:</strong> 13:30</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Frete:</strong> R$ 19,99</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Tamanho:</strong> médio</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Distância:</strong> 3.2km</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Cliente:</strong> Keynner Davi</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Runner:</strong> 2010</p>
+                </div>
+
+                <div class="w-100 text-center">
+                    <button class="btn btn-soft-danger w-100 py-2">Abortar corrida</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card card-corrida p-3 shadow-sm border-0">
+
+            <div class="d-flex flex-column gap-3">
+
+
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/736x/cb/dc/bb/cbdcbbcc8004c5e26340b947fc68ee58.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <div>
+                    <h5 class="fw-semibold mb-2 text-center">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Estabelecimento:</strong> Restaurante prato bom</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Estabelecimento:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Cliente:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Retirada:</strong> Rua Principal, 123</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Entrega:</strong> Bairro Tucunaré</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Horário:</strong> 13:30</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Frete:</strong> R$ 19,99</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Tamanho:</strong> médio</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Distância:</strong> 3.2km</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Cliente:</strong> Keynner Davi</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Runner:</strong> 2010</p>
+                </div>
+
+                <div class="w-100 text-center">
+                    <button class="btn btn-soft-danger w-100 py-2">Abortar corrida</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card card-corrida p-3 shadow-sm border-0">
+
+            <div class="d-flex flex-column gap-3">
+
+
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/1200x/d4/6c/3f/d46c3f51afcfa3cbe9333f839d33f01a.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <div>
+                    <h5 class="fw-semibold mb-2 text-center">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Estabelecimento:</strong> Restaurante prato bom</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Estabelecimento:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Cliente:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Retirada:</strong> Rua Principal, 123</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Entrega:</strong> Bairro Tucunaré</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Horário:</strong> 13:30</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Frete:</strong> R$ 19,99</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Tamanho:</strong> médio</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Distância:</strong> 3.2km</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Cliente:</strong> Keynner Davi</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Runner:</strong> 2010</p>
+                </div>
+
+                <div class="w-100 text-center">
+                    <button class="btn btn-soft-danger w-100 py-2">Abortar corrida</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card card-corrida p-3 shadow-sm border-0">
+
+            <div class="d-flex flex-column gap-3">
+
+
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/736x/b7/b6/53/b7b653a77595bf3f16a6305f01df71ee.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <div>
+                    <h5 class="fw-semibold mb-2 text-center">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Estabelecimento:</strong> Restaurante prato bom</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Estabelecimento:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Telefone do Cliente:</strong> (xx)-xxxxx-xxxx</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Retirada:</strong> Rua Principal, 123</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Entrega:</strong> Bairro Tucunaré</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Horário:</strong> 13:30</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Frete:</strong> R$ 19,99</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Tamanho:</strong> médio</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Distância:</strong> 3.2km</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Cliente:</strong> Keynner Davi</p>
+                    <p class="mb-1 text-secondary"><strong class="text-dark">Runner:</strong> 2010</p>
+                </div>
+
+                <div class="w-100 text-center">
+                    <button class="btn btn-soft-danger w-100 py-2">Abortar corrida</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+</div>
