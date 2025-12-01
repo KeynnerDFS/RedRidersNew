@@ -14,7 +14,7 @@
         </div>
     </section>
 
-    @* aqui dentro deve ser buscado todas solicitações de entregas com o status aguardando entregador ou seila...*@
+    @* aqui dentro deve ser buscado todas solicitações de entregas com o status parada ou seila...*@
     <section class="corridas-lista">
 
         <!-- card de corrida -->
@@ -30,23 +30,194 @@
 
                 <!-- INFORMAÇÕES -->
                 <div class="col-12 col-md-6">
-                    <h5 class="fw-semibold mb-2">Nome do item</h5>
+                    <h5 class="fw-semibold mb-2">Nome do pedido</h5>
 
                     <p class="mb-1 text-secondary">
-                        <strong class="text-dark">Local de retirada:</strong> Rua Principal, 123
+                        <strong class="text-dark">Ponto de retirada:</strong> Rua Principal, 123
+                    </p>
+
+                    @* não deve ser mostrado o endereço completo antes do runner aceitar a corrida*@
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de entrega:</strong> Bairro tucunaré...
                     </p>
 
                     <p class="mb-1 text-secondary">
-                        <strong class="text-dark">Local de entrega:</strong> Av. Secundária, 987
+                        <strong class="text-dark">Horário de retirada:</strong> 13:30
                     </p>
 
-                    <p class="mb-0 text-secondary">
-                        <strong class="text-dark">Preço do Frete:</strong> R$ 19.99
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Frete Total:</strong> R$ 19.99
                     </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Tamanho do Pedido:</strong> médio
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Distância aproximada entre os pontos:</strong> 3.2km
+                    </p>
+
                 </div>
 
                 <!-- AÇÃO -->
                 <div class="col-12 col-md-3 text-md-end text-center">
+                    @* ao clicar em aceitar corrida o status deve mudar para "marcada"*@
+                    <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
+                        Aceitar corrida
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3 p-3">
+            <div class="row align-items-center g-3">
+
+                <!-- IMAGEM -->
+                <div class="col-12 col-md-3">
+                    <img src="https://i.pinimg.com/736x/f1/d0/f9/f1d0f9455ebbda33179c19984af7bbb5.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-12 col-md-6">
+                    <h5 class="fw-semibold mb-2">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de retirada:</strong> Rua Principal, 123
+                    </p>
+
+                    @* não deve ser mostrado o endereço completo antes do runner aceitar a corrida*@
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de entrega:</strong> Bairro tucunaré...
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Horário de retirada:</strong> 13:30
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Frete Total:</strong> R$ 19.99
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Tamanho do Pedido:</strong> médio
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Distância aproximada entre os pontos:</strong> 3.2km
+                    </p>
+
+                </div>
+
+                <!-- AÇÃO -->
+                <div class="col-12 col-md-3 text-md-end text-center">
+                    @* ao clicar em aceitar corrida o status deve mudar para "marcada"*@
+                    <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
+                        Aceitar corrida
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3 p-3">
+            <div class="row align-items-center g-3">
+
+                <!-- IMAGEM -->
+                <div class="col-12 col-md-3">
+                    <img src="https://i.pinimg.com/736x/5c/af/ba/5cafba50374ef94af68d66e4141bb71d.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-12 col-md-6">
+                    <h5 class="fw-semibold mb-2">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de retirada:</strong> Rua Principal, 123
+                    </p>
+
+                    @* não deve ser mostrado o endereço completo antes do runner aceitar a corrida*@
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de entrega:</strong> Bairro tucunaré...
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Horário de retirada:</strong> 13:30
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Frete Total:</strong> R$ 19.99
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Tamanho do Pedido:</strong> médio
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Distância aproximada entre os pontos:</strong> 3.2km
+                    </p>
+
+                </div>
+
+                <!-- AÇÃO -->
+                <div class="col-12 col-md-3 text-md-end text-center">
+                    @* ao clicar em aceitar corrida o status deve mudar para "marcada"*@
+                    <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
+                        Aceitar corrida
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3 p-3">
+            <div class="row align-items-center g-3">
+
+                <!-- IMAGEM -->
+                <div class="col-12 col-md-3">
+                    <img src="https://i.pinimg.com/736x/0d/f4/a0/0df4a0b66d8d8cf3b3b648eae41126ad.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-12 col-md-6">
+                    <h5 class="fw-semibold mb-2">Nome do pedido</h5>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de retirada:</strong> Rua Principal, 123
+                    </p>
+
+                    @* não deve ser mostrado o endereço completo antes do runner aceitar a corrida*@
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Ponto de entrega:</strong> Bairro tucunaré...
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Horário de retirada:</strong> 13:30
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Frete Total:</strong> R$ 19.99
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Tamanho do Pedido:</strong> médio
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Distância aproximada entre os pontos:</strong> 3.2km
+                    </p>
+
+                </div>
+
+                <!-- AÇÃO -->
+                <div class="col-12 col-md-3 text-md-end text-center">
+                    @* ao clicar em aceitar corrida o status deve mudar para "marcada"*@
                     <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
                         Aceitar corrida
                     </button>
