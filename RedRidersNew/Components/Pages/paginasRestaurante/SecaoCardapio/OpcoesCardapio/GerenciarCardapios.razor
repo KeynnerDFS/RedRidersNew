@@ -33,15 +33,16 @@
 
                     <div class="card-body text-center">
                         <div class="btn-group w-100 btn-soft-group">
-                            <button class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1"
-                                    @onclick="() => Editar(cardapio.Id)">
+                            <NavLink href=$"/restaurante/editar-cardapio/{cardapio.Id}"
+                                     class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-pencil-square"></i>
-                            </button>
+                            </NavLink>
 
-                            <button class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1"
-                                    @onclick="() => VerDetalhes(cardapio.Id)">
+                            <NavLink href=$"/restaurante/detalhes-cardapio/{cardapio.Id}"
+                                     class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-eye"></i>
-                            </button>
+                            </NavLink>
+
 
                             <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
                                     @onclick="() => Remover(cardapio.Id)">
@@ -83,16 +84,6 @@
         Cardapios = Cardapios
             .Where(c => c.Nome.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
             .ToList();
-    }
-
-    private void Editar(int id)
-    {
-        Nav.NavigateTo($"/restaurante/editar-cardapio/{id}");
-    }
-
-    private void VerDetalhes(int id)
-    {
-        Nav.NavigateTo($"/restaurante/detalhes-cardapio/{id}");
     }
 
     private void Remover(int id)
