@@ -1,16 +1,15 @@
-﻿@page "/restaurante/detalhes-restaurante"
+﻿@page "/restaurante/detalhes-restaurante/{id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+
+@inject NavigationManager Nav
 
 <PageTitle>Detalhes do Restaurante</PageTitle>
 
 <div class="container py-4">
     <NavBarRestaurante />
 
-    <!-- Imagem do restaurante -->
-
-        <!-- valor do src="@restaurante.RotaImgEstabelecimento" na img-->
-    <img src="https://i.pinimg.com/736x/06/14/ad/0614ade80a5f4b7e565a432cd8009bef.jpg"
+    <img src="@restaurante.RotaImgEstabelecimento"
          alt="Imagem do Restaurante"
          class="img-fluid banner-img shadow-sm mb-4" />
 
@@ -20,37 +19,31 @@
 
         <div class="row g-3">
 
-            <!-- Nome do Estabelecimento -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Nome do Estabelecimento</label>
                 <InputText class="form-control" @bind-Value="restaurante.NomeEstabelecimento" />
             </div>
 
-            <!-- Telefone -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Telefone</label>
                 <InputText class="form-control" @bind-Value="restaurante.TelefoneEstabelecimento" />
             </div>
 
-            <!-- CNPJ -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">CNPJ</label>
                 <InputText class="form-control" @bind-Value="restaurante.CnpjEstabelecimento" />
             </div>
 
-            <!-- Tipo de Negócio -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Tipo de Negócio</label>
                 <InputText class="form-control" @bind-Value="restaurante.TipoNegocioEstabelecimento" />
             </div>
 
-            <!-- Imagem -->
             <div class="col-md-12">
                 <label class="form-label fw-semibold">URL da Imagem do Estabelecimento</label>
                 <InputText class="form-control" @bind-Value="restaurante.RotaImgEstabelecimento" />
             </div>
 
-            <!-- Endereço -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">CEP</label>
                 <InputText class="form-control" @bind-Value="restaurante.CEPEstabelecimento" />
@@ -97,17 +90,21 @@
 </div>
 
 @code {
-    private CadastroRestaurante restaurante = new()
+    [Parameter]
+    public int id { get; set; }
+
+    private RestauranteModel restaurante = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        // Preencher com dados mockados ou carregados do banco
-    };
+    }
 
     private void IrParaEdicao()
     {
-        // navega para /restaurante/editar-restaurante
+        Nav.NavigateTo("/restaurante/editar-restaurante");
     }
 
-    public class CadastroRestaurante
+    public class RestauranteModel
     {
         public string NomeEstabelecimento { get; set; }
         public string TelefoneEstabelecimento { get; set; }
@@ -115,7 +112,6 @@
         public string RazaoSocialEstabelecimento { get; set; }
         public string CnpjEstabelecimento { get; set; }
         public string TipoNegocioEstabelecimento { get; set; }
-
         public string CEPEstabelecimento { get; set; }
         public string RuaEstabelecimento { get; set; }
         public string NumeroEstabelecimento { get; set; }

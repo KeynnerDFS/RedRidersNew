@@ -1,4 +1,4 @@
-﻿@page "/restaurante/editar-restaurante"
+﻿@page "/restaurante/editar-restaurante/{id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
 
@@ -108,6 +108,9 @@
 </div>
 
 @code {
+    [Parameter]
+    public int id { get; set; }
+
     private CadastroRestaurante restaurante = new();
 
     private void SalvarAlteracoes()
