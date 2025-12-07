@@ -1,0 +1,86 @@
+﻿@page "/restaurante/detalhes-prato/{id:int}"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Detalhes do Prato</PageTitle>
+
+<div class="container py-4">
+    <NavBarCardapio />
+
+    <div class="card shadow-sm p-4">
+
+        <div class="row g-4">
+
+            <!-- Imagem do prato -->
+            <div class="col-md-5">
+                <img src="@prato.RotaImgPrato"
+                     class="img-fluid rounded"
+                     alt="@prato.NomePrato" />
+            </div>
+
+            <div class="col-md-7">
+
+                <h3 class="fw-bold">@prato.NomePrato</h3>
+                <p class="text-muted mb-1">@prato.CategoriaPrato</p>
+
+                <h4 class="text-primary fw-bold mt-3">R$ @prato.PrecoPrato</h4>
+
+                <div class="mt-3">
+                    <p><strong>Porção:</strong> @prato.TamanhoPrato</p>
+                    <p><strong>Peso / Litros:</strong> @prato.QuantidadePrato</p>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="fw-semibold">Descrição:</h6>
+                    <p class="text-muted">@prato.DescricaoPrato</p>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <a class="btn btn-soft-primary px-4" href="/restaurante/editar-prato/@id">Editar</a>
+                    <button class="btn btn-soft-danger px-4" @onclick="ExcluirPrato">Excluir</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+
+    private Prato prato = new Prato();
+
+    protected override void OnInitialized()
+    {
+        // TODO: Buscar o prato por id
+        prato = new Prato
+        {
+            NomePrato = "Exemplo de Prato",
+            CategoriaPrato = "Massas",
+            QuantidadePrato = "700g",
+            DescricaoPrato = "Um delicioso prato artesanal.",
+            PrecoPrato = 39.90m,
+            TamanhoPrato = "Grande",
+            RotaImgPrato = "https://i.pinimg.com/736x/0b/48/63/0b4863b3c08c6955f0a31659b97d8df6.jpg"
+        };
+    }
+
+    private void ExcluirPrato()
+    {
+        // TODO: remover do banco
+    }
+
+    public class Prato
+    {
+        public string NomePrato { get; set; }
+        public string DescricaoPrato { get; set; }
+        public decimal PrecoPrato { get; set; }
+        public string RotaImgPrato { get; set; }
+        public string CategoriaPrato { get; set; }
+        public string TamanhoPrato { get; set; }
+        public string QuantidadePrato { get; set; }
+    }
+}

@@ -1,0 +1,92 @@
+﻿@page "/restaurante/cadastro-prato"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Cadastrar Prato</PageTitle>
+
+<div class="container py-4">
+    <NavBarCardapio />
+
+    <EditForm Model="@prato" OnValidSubmit="CadastrarPrato" class="card p-4 mb-4 shadow-sm">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h4 class="mb-3 fw-semibold border-bottom pb-2">Cadastro de Prato</h4>
+
+        <div class="row g-3">
+
+            <!-- Nome -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Nome do prato</label>
+                <InputText class="form-control" @bind-Value="prato.NomePrato" />
+            </div>
+
+            <!-- Categoria -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Categoria</label>
+                <InputText class="form-control" @bind-Value="prato.CategoriaPrato" />
+            </div>
+
+            <!-- peso -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Peso / Litros</label>
+                <InputText class="form-control" @bind-Value="prato.QuantidadePrato" />
+            </div>
+
+            <!-- Descrição -->
+            <div class="col-12">
+                <label class="form-label fw-semibold">Descrição</label>
+                <InputTextArea class="form-control" rows="3" @bind-Value="prato.DescricaoPrato" />
+            </div>
+
+            <!-- Preço -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Preço</label>
+                <InputNumber class="form-control" @bind-Value="prato.PrecoPrato" />
+            </div>
+
+            <!-- Tamanho -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Tamanho / Porção</label>
+                <InputText class="form-control" @bind-Value="prato.TamanhoPrato" />
+            </div>
+
+            <!-- Imagem -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">URL da Imagem</label>
+                <InputText class="form-control" @bind-Value="prato.RotaImgPrato" />
+            </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+            <button class="btn btn-soft-primary px-4">Cadastrar</button>
+        </div>
+
+    </EditForm>
+
+</div>
+
+@code {
+
+    private Prato prato = new Prato();
+
+    private void CadastrarPrato()
+    {
+        // TODO: salvar o prato no banco ou API
+        Console.WriteLine("Prato cadastrado:");
+        Console.WriteLine(prato.NomePrato);
+    }
+
+    public class Prato
+    {
+        public string NomePrato { get; set; }
+        public string DescricaoPrato { get; set; }
+        public decimal PrecoPrato { get; set; }
+        public string RotaImgPrato { get; set; }
+        public string CategoriaPrato { get; set; }
+        public string TamanhoPrato { get; set; }
+        public string QuantidadePrato { get; set; }
+    }
+}
