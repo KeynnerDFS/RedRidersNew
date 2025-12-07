@@ -1,0 +1,38 @@
+﻿.menu-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.menu-title {
+    color: #343a40;
+}
+
+.menu-category {
+    font-style: italic;
+}
+
+.menu-subtitle {
+    font-size: 0.9rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+}
+
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+.text-primary {
+    color: #ff5722 !important;
+}

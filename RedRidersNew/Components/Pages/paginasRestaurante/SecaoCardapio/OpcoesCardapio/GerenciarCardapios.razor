@@ -1,5 +1,6 @@
 ﻿@page "/restaurante/gerenciar-cardapios"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
+@inject NavigationManager Nav
 @layout MainLayoutRestaurante
 
 <PageTitle>Gerenciar Cardápios</PageTitle>
@@ -9,53 +10,101 @@
     <NavBarCardapio />
 
     <section class="mb-4">
-        <div class="search-box">
-            <input type="text" placeholder="Pesquisar cardapios..." />
-            <button class="btn-search">Buscar</button>
-            <NavLink href="restaurante/cadastro-cardapio" class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
+        <div class="search-box d-flex gap-2">
+            <input type="text" class="form-control" placeholder="Pesquisar cardápios..." @bind="searchTerm" />
+            <button class="btn btn-search btn-secondary" @onclick="Buscar">Buscar</button>
+
+            <NavLink href="/restaurante/cadastro-cardapio"
+                     class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
                 <i class="bi bi-plus-circle"></i>
             </NavLink>
         </div>
     </section>
 
-    <!-- Grid de cardápios -->
     <div class="row g-4">
-
-        <!-- CARD 1 -->
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="position-relative">
-
-                    <img class="card-img-top"
-                         src="https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif"
-                         alt="Cardápio" />
-
-                    <!-- faixa do título -->
-                    <div class="titulo-faixa">
-                        cardapio 1
+        @foreach (var cardapio in Cardapios)
+        {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="position-relative">
+                        <img class="card-img-top" src="@cardapio.Imagem" alt="@cardapio.Nome" />
+                        <div class="titulo-faixa">@cardapio.Nome</div>
                     </div>
 
-                </div>
+                    <div class="card-body text-center">
+                        <div class="btn-group w-100 btn-soft-group">
+                            <button class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1"
+                                    @onclick="() => Editar(cardapio.Id)">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
 
-                <div class="card-body text-center">
+                            <button class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1"
+                                    @onclick="() => VerDetalhes(cardapio.Id)">
+                                <i class="bi bi-eye"></i>
+                            </button>
 
-                    <div class="btn-group w-100 btn-soft-group">
-                        <button class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                        <button class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-eye"></i>
-                        </button>
-
-                        <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
+                                    @onclick="() => Remover(cardapio.Id)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
-
                 </div>
             </div>
-        </div>
+        }
     </div>
-
 </div>
+
+@code {
+    private string searchTerm = "";
+    private List<CardapioModel> Cardapios { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        CarregarCardapios();
+    }
+
+    private void CarregarCardapios()
+    {
+        Cardapios = new List<CardapioModel>
+        {
+            new() { Id = 1, Nome = "Cardápio do Dia", Imagem = "https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif" },
+        };
+    }
+
+    private void Buscar()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            CarregarCardapios();
+            return;
+        }
+
+        Cardapios = Cardapios
+            .Where(c => c.Nome.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void Editar(int id)
+    {
+        Nav.NavigateTo($"/restaurante/editar-cardapio/{id}");
+    }
+
+    private void VerDetalhes(int id)
+    {
+        Nav.NavigateTo($"/restaurante/detalhes-cardapio/{id}");
+    }
+
+    private void Remover(int id)
+    {
+        var item = Cardapios.FirstOrDefault(x => x.Id == id);
+        if (item != null) Cardapios.Remove(item);
+    }
+
+    public class CardapioModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Imagem { get; set; }
+    }
+}
