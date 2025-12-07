@@ -1,0 +1,135 @@
+﻿@page "/restaurante/adicionar-restaurantes"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle> Adicionar Pratos </PageTitle>
+
+<div class="container py-4">
+    <NavBarRestaurante/>
+
+    <EditForm Model="@restaurante" OnValidSubmit="CadastrarRestaurante" class="card p-4 mb-4 shadow-sm">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h4 class="mb-3 fw-semibold border-bottom pb-2">Cadastro de Restaurante</h4>
+
+        <div class="row g-3">
+
+            <!-- Nome do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Nome do Estabelecimento</label>
+                <InputText class="form-control" @bind-Value="restaurante.NomeEstabelecimento" />
+            </div>
+
+            <!-- Telefone -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Telefone</label>
+                <InputText class="form-control" @bind-Value="restaurante.TelefoneEstabelecimento" />
+            </div>
+
+            <!-- CNPJ -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">CNPJ</label>
+                <InputText class="form-control" @bind-Value="restaurante.CnpjEstabelecimento" />
+            </div>
+
+            <!-- Tipo de Negócio -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Tipo de Negócio</label>
+                <InputText class="form-control" @bind-Value="restaurante.TipoNegocioEstabelecimento" />
+            </div>
+
+            <!-- Imagem do Estabelecimento -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">URL da Imagem do Estabelecimento</label>
+                <InputText class="form-control" @bind-Value="restaurante.RotaImgEstabelecimento" />
+            </div>
+
+            <!-- CEP do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">CEP</label>
+                <InputText class="form-control" @bind-Value="restaurante.CEPEstabelecimento" />
+            </div>
+
+            <!-- Rua do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Rua</label>
+                <InputText class="form-control" @bind-Value="restaurante.RuaEstabelecimento" />
+            </div>
+
+            <!-- Numero do Estabeleciemto -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Tipo de Negócio</label>
+                <InputText class="form-control" @bind-Value="restaurante.NumeroEstabelecimento" />
+            </div>
+
+            <!-- Complemento do Estabelecimento. Opcional -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Tipo de Negócio</label>
+                <InputText class="form-control" @bind-Value="restaurante.ComplementoEstabelecimento" />
+            </div>
+
+            <!-- Bairro do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Tipo de Negócio</label>
+                <InputText class="form-control" @bind-Value="restaurante.BairroEstabelecimento" />
+            </div>
+
+            <!-- Cidade do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Cidade</label>
+                <InputText class="form-control" @bind-Value="restaurante.CidadeEstabelecimento" />
+            </div>
+
+            <!-- Estado do Estabelecimento -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Estado</label>
+                <InputText class="form-control" @bind-Value="restaurante.EstadoEstabelecimento" />
+            </div>
+
+            <!-- Ponto de Referência do Estabelecimento. Opcional -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Ponto de Referência</label>
+                <InputText class="form-control" @bind-Value="restaurante.PontoReferenciaEstabelecimento" />
+            </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+            <button class="btn btn-soft-primary px-4">Cadastrar</button>
+        </div>
+
+    </EditForm>
+
+</div>
+
+@code {
+    private CadastroRestaurante restaurante = new();
+
+    private void CadastrarRestaurante()
+    {
+
+    }
+
+    public class CadastroRestaurante
+    {
+        // dados gerais
+        public string NomeEstabelecimento { get; set; }
+        public string TelefoneEstabelecimento { get; set; }
+        public string RotaImgEstabelecimento { get; set; }
+        public string RazaoSocialEstabelecimento { get; set; }
+        public string CnpjEstabelecimento { get; set; }
+        public string TipoNegocioEstabelecimento { get; set; }
+
+        // endereco
+        public string CEPEstabelecimento { get; set; }
+        public string RuaEstabelecimento { get; set; }
+        public string NumeroEstabelecimento { get; set; }
+        public string ComplementoEstabelecimento { get; set; }
+        public string BairroEstabelecimento { get; set; }
+        public string CidadeEstabelecimento { get; set; }
+        public string EstadoEstabelecimento { get; set; }
+        public string PontoReferenciaEstabelecimento { get; set; }
+    }
+}
