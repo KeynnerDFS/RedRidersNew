@@ -1,0 +1,138 @@
+﻿@page "/restaurante/cadastrar-cliente"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle> Cadastrar Cliente </PageTitle>
+
+<div class="container py-4">
+    <NavBarClientes />
+
+    <EditForm Model="@cliente" OnValidSubmit="CadastrarCliente" class="card p-4 mb-4 shadow-sm">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h4 class="mb-3 fw-semibold border-bottom pb-2">Cadastro de Cliente</h4>
+
+        <div class="row g-3">
+
+            <!-- Nome -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Nome do Cliente</label>
+                <InputText class="form-control" @bind-Value="cliente.NomeCliente" />
+            </div>
+
+            <!-- Telefone -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Telefone</label>
+                <InputText class="form-control" @bind-Value="cliente.TelefoneCliente" />
+            </div>
+
+            <!-- CPF -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">CPF</label>
+                <InputText class="form-control" @bind-Value="cliente.CpfCliente" />
+            </div>
+
+            <!-- RG -->
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">RG</label>
+                <InputText class="form-control" @bind-Value="cliente.RgCliente" />
+            </div>
+
+            <!-- Imagem -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">URL da Imagem</label>
+                <InputText class="form-control" @bind-Value="cliente.RotaImgCliente" />
+            </div>
+
+            <h5 class="mt-4 fw-semibold border-bottom pb-2">Endereço</h5>
+
+            <!-- CEP -->
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">CEP</label>
+                <InputText class="form-control" @bind-Value="cliente.CEPCliente" />
+            </div>
+
+            <!-- Rua -->
+            <div class="col-md-8">
+                <label class="form-label fw-semibold">Rua</label>
+                <InputText class="form-control" @bind-Value="cliente.RuaCliente" />
+            </div>
+
+            <!-- Número -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Número</label>
+                <InputText class="form-control" @bind-Value="cliente.NumeroCliente" />
+            </div>
+
+            <!-- Complemento -->
+            <div class="col-md-9">
+                <label class="form-label fw-semibold">Complemento</label>
+                <InputText class="form-control" @bind-Value="cliente.ComplementoCliente" />
+            </div>
+
+            <!-- Bairro -->
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Bairro</label>
+                <InputText class="form-control" @bind-Value="cliente.BairroCliente" />
+            </div>
+
+            <!-- Cidade -->
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Cidade</label>
+                <InputText class="form-control" @bind-Value="cliente.CidadeCliente" />
+            </div>
+
+            <!-- Estado -->
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Estado</label>
+                <InputText class="form-control" @bind-Value="cliente.EstadoCliente" />
+            </div>
+
+            <!-- Referência -->
+            <div class="col-12">
+                <label class="form-label fw-semibold">Ponto de Referência</label>
+                <InputText class="form-control" @bind-Value="cliente.PontoReferenciaCliente" />
+            </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+            <button class="btn btn-soft-primary px-4">Cadastrar</button>
+        </div>
+
+    </EditForm>
+
+</div>
+
+@code {
+
+    private Cliente cliente = new();
+
+    private void CadastrarCliente()
+    {
+        
+    }
+
+    public class Cliente
+    {
+        // dados gerais
+        public string NomeCliente { get; set; }
+        public string TelefoneCliente { get; set; }
+        public string CpfCliente { get; set; }
+        public string RgCliente { get; set; }
+        public string RotaImgCliente { get; set; }
+
+        // endereço
+        public string CEPCliente { get; set; }
+        public string RuaCliente { get; set; }
+        public string NumeroCliente { get; set; }
+        public string ComplementoCliente { get; set; }
+        public string BairroCliente { get; set; }
+        public string CidadeCliente { get; set; }
+        public string EstadoCliente { get; set; }
+        public string PontoReferenciaCliente { get; set; }
+    }
+
+}
