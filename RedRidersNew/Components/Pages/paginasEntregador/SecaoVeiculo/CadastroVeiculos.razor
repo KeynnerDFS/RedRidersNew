@@ -1,6 +1,10 @@
 ﻿@page "/entregador/cadastro-veiculo"
 @using RedRidersNew.Components.Layout.LayoutEntregador
 @layout MainLayoutEntregador
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject VeiculoDAO veiculoDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Cadastrar Veículo</PageTitle>
 
@@ -16,39 +20,44 @@
 
             <div class="mb-3">
                 <label class="form-label">Nome</label>
-                <InputText class="form-control" @bind-Value="veiculo.Nome" />
+                <InputText class="form-control" @bind-Value="@veiculo.nome" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Modelo</label>
-                <InputText class="form-control" @bind-Value="veiculo.Modelo" />
+                <InputText class="form-control" @bind-Value="@veiculo.modelo" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Imagem (URL)</label>
-                <InputText class="form-control" @bind-Value="veiculo.Imagem" />
+                <InputText class="form-control" @bind-Value="@veiculo.rotaimg" />
             </div>
 
-            <button class="btn btn-soft-primary px-4">Salvar</button>
+            <button type="submit" class="btn btn-soft-primary px-4">Salvar</button>
         </EditForm>
     </div>
 </div>
 
 @code {
-    private VeiculoModel veiculo = new();
+    private string? erro = null;
+
+    
+    private Veiculo veiculo { get; set; } = new Veiculo();
 
     private void Salvar()
     {
-        Console.WriteLine($"Veículo {veiculo.Nome} cadastrado!");
-        // Aqui você pode redirecionar para o gerenciar-veiculos:
-        // Nav.NavigateTo("/restaurante/gerenciar-veiculos");
-    }
+        try
+        {
+            if (string.IsNullOrWhiteSpace(veiculo.nome))
+                throw new Exception("O campo nome é obrigatório");
 
-    public class VeiculoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Modelo { get; set; }
-        public string Imagem { get; set; }
+            veiculoDAO.Inserir(veiculo);
+
+            Navigation.NavigateTo("/entregador/gerenciar-veiculos");
+        }
+        catch (Exception ex)
+        {
+            erro = ex.Message;
+        }
     }
 }

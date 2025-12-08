@@ -1,42 +1,50 @@
 ﻿@page "/entregador/detalhes-veiculo/{Id:int}"
 @using RedRidersNew.Components.Layout.LayoutEntregador
 @layout MainLayoutEntregador
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject VeiculoDAO veiculoDAO;
+@inject NavigationManager Navigation
 
-<PageTitle>Detalhes do Veículo</PageTitle>
+
+
+
+<PageTitle>Detalhes do Veículo - @veiculo.Id </PageTitle>
 
 <div class="container py-4">
 
     <NavBarVeiculos />
 
     <div class="card shadow-sm p-4">
-        <h4 class="mb-3">@veiculo.Nome</h4>
-        <p class="text-muted">@veiculo.Modelo</p>
-        <img src="@veiculo.Imagem" alt="@veiculo.Nome" class="img-fluid rounded mb-3" />
+        <h4 class="mb-3">@veiculo.nome</h4>
+        <p class="text-muted">@veiculo.modelo</p>
+        <img src="@veiculo.rotaimg" alt="@veiculo.nome" class="img-fluid rounded mb-3" />
 
         <!-- Aqui você pode colocar mais detalhes do veículo, como placa, ano, cor, etc. -->
     </div>
 </div>
 
 @code {
-    [Parameter] public int Id { get; set; }
-    private VeiculoModel veiculo = new();
+
+    private string erro = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Veiculo veiculo { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        veiculo = new VeiculoModel
-        {
-            Id = Id,
-            Nome = $"Veículo {Id}",
-            Modelo = "Modelo X",
-            Imagem = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg"
-        };
-    }
+        var c = veiculoDAO.BuscarPorId(Id);
 
-    public class VeiculoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Modelo { get; set; }
-        public string Imagem { get; set; }
+        if (c != null)
+        {
+            veiculo = c;
+        }
+        else
+        {
+            erro = "Produto não encontrado.";
+        }
     }
 }

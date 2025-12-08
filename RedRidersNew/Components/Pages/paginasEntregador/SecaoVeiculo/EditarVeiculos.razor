@@ -1,8 +1,12 @@
 ﻿@page "/entregador/editar-veiculo/{Id:int}"
 @using RedRidersNew.Components.Layout.LayoutEntregador
 @layout MainLayoutEntregador
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject VeiculoDAO veiculoDAO;
+@inject NavigationManager Navigation
 
-<PageTitle>Editar Veículo</PageTitle>
+<PageTitle>Editar Veículo - @veiculo.Id</PageTitle>
 
 <div class="container py-4">
 
@@ -11,55 +15,64 @@
     <div class="card shadow-sm p-4">
         <h4 class="mb-3">Editar Veículo</h4>
 
-        <EditForm Model="@veiculo" OnValidSubmit="SalvarAlteracoes">
+        <EditForm Model="@veiculo" OnValidSubmit="Salvar">
             <DataAnnotationsValidator />
 
             <div class="mb-3">
                 <label class="form-label">Nome</label>
-                <InputText class="form-control" @bind-Value="veiculo.Nome" />
+                <InputText class="form-control" @bind-Value="@veiculo.nome" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Modelo</label>
-                <InputText class="form-control" @bind-Value="veiculo.Modelo" />
+                <InputText class="form-control" @bind-Value="@veiculo.modelo" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Imagem (URL)</label>
-                <InputText class="form-control" @bind-Value="veiculo.Imagem" />
+                <InputText class="form-control" @bind-Value="@veiculo.rotaimg" />
             </div>
 
-            <button class="btn btn-soft-primary px-4">Salvar Alterações</button>
+            <button type="submit" class="btn btn-soft-primary px-4">Salvar Alterações</button>
         </EditForm>
     </div>
 </div>
 
 @code {
-    [Parameter] public int Id { get; set; }
-    private VeiculoModel veiculo = new();
+    private string erro = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Veiculo veiculo { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        // Simulação de carregamento pelo ID
-        veiculo = new VeiculoModel
+        var veiculos = veiculoDAO.BuscarPorId(Id);
+
+        if (veiculo != null)
         {
-            Id = Id,
-            Nome = $"Veículo {Id}",
-            Modelo = "Modelo X",
-            Imagem = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg"
-        };
+            veiculo = veiculos;
+        }
+        else
+        {
+            erro = "Produto não encontrado.";
+        }
     }
 
-    private void SalvarAlteracoes()
+    private void Salvar()
     {
-        Console.WriteLine($"Veículo {veiculo.Id} atualizado!");
-    }
+        try
+        {
+            veiculoDAO.Atualizar(veiculo);
 
-    public class VeiculoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Modelo { get; set; }
-        public string Imagem { get; set; }
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes");
+        }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao salvar: {ex.Message}";
+        }
+
     }
 }

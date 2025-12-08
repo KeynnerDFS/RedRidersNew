@@ -1,6 +1,10 @@
 ﻿@page "/restaurante/cadastro-cardapio"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject CardapioDAO cardapioDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Cadastrar Cardápio</PageTitle>
 
@@ -11,155 +15,58 @@
     <div class="card shadow-sm p-4 mb-4">
         <h4 class="mb-3">Informações do Cardápio</h4>
 
-        <EditForm Model="@cardapio" OnValidSubmit="SalvarCardapio">
-            <DataAnnotationsValidator />
+        <EditForm Model="@cardapio" OnValidSubmit="Salvar">
+            
 
             <div class="mb-3">
                 <label class="form-label">Nome do Cardápio</label>
-                <InputText class="form-control" @bind-Value="cardapio.Nome" />
+                <InputText class="form-control" @bind-Value="cardapio!.nome" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Categoria</label>
-                <InputText class="form-control" @bind-Value="cardapio.Categoria" />
+                <label class="form-label">Descrição</label>
+                <InputText class="form-control" @bind-Value="cardapio!.descricao" />
             </div>
-
             <div class="mb-3">
-                <label class="form-label">Estabelecimento</label>
-                <select class="form-select" @bind="cardapio.RestauranteId">
-                    <option value="">Selecione...</option>
-
-                    @foreach (var rest in restaurantes)
-                    {
-                        <option value="@rest.Id">@rest.Nome</option>
-                    }
-                </select>
+                <label class="form-label">Nº Restaurante</label>
+                <InputNumber class="form-control" @bind-Value="cardapio.idCresFk" />
             </div>
 
+            <div class="mt-4 text-end">
+                <button type="submit" class="btn btn-soft-primary px-4">Cadastrar</button>
+            </div>
+
+            @if (erro is not null)
+            {
+                <p style="color:red">@erro</p>
+            }
             
         </EditForm>
     </div>
 
-    <!-- Lista de pratos disponíveis -->
-    <div class="card shadow-sm p-4 mb-4">
-        <h4 class="mb-3">Pratos Disponíveis</h4>
-
-        @foreach (var prato in pratosDisponiveis)
-        {
-            <div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2">
-                <div>
-                    <strong>@prato.Nome</strong> — R$ @prato.Preco
-                </div>
-
-                <button class="btn btn-success btn-sm"
-                        @onclick="() => AdicionarPratoAoCardapio(prato.Id)"
-                        disabled="@CardapioJaContem(prato.Id)">
-                    Adicionar
-                </button>
-            </div>
-        }
-    </div>
-
-    <!-- Lista dos pratos adicionados ao cardápio -->
-    <div class="card shadow-sm p-4">
-        <h4 class="mb-3">Pratos do Cardápio</h4>
-
-        @if (cardapio.Pratos.Count == 0)
-        {
-            <p class="text-muted">Nenhum prato adicionado ainda.</p>
-        }
-        else
-        {
-            <ul class="list-group">
-                @foreach (var prato in cardapio.Pratos)
-                {
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>@prato.Nome</strong> — R$ @prato.Preco
-                        </div>
-
-                        <button class="btn btn-danger btn-sm"
-                                @onclick="() => RemoverPratoDoCardapio(prato.Id)">
-                            Remover
-                        </button>
-                    </li>
-                }
-            </ul>
-        }
-
-        <button class="btn btn-soft-primary px-4">Cadastrar Cardápio</button>
-    </div>
+  
 </div>
 
 
 @code {
-    // Modelo do cardápio
-    public class CardapioModel
+    private string? erro = null;
+
+    [SupplyParameterFromForm]
+    private Cardapio? cardapio { get; set; } = new();
+
+    private void Salvar()
     {
-        public string Nome { get; set; }
-        public string Categoria { get; set; }
-        public string RestauranteId { get; set; }
-        public List<PratoModel> Pratos { get; set; } = new();
-    }
+        try
+        {
+            if (string.IsNullOrWhiteSpace(cardapio!.nome))
+                throw new Exception("O campo nome é obrigatório");
 
-    // Modelo dos pratos
-    public class PratoModel
-    {
-        public Guid Id { get; set; }
-        public string Nome { get; set; }
-        public decimal Preco { get; set; }
-    }
-
-    // Modelo dos restaurantes
-    public class RestauranteModel
-    {
-        public string Id { get; set; }
-        public string Nome { get; set; }
-    }
-
-    // Instâncias base
-    private CardapioModel cardapio = new();
-
-    // Lista simulada de pratos
-    private List<PratoModel> pratosDisponiveis = new()
-    {
-        new PratoModel{ Id = Guid.NewGuid(), Nome="X-Salada", Preco=15 },
-        new PratoModel{ Id = Guid.NewGuid(), Nome="Pizza Média", Preco=30 },
-        new PratoModel{ Id = Guid.NewGuid(), Nome="Lasanha", Preco=25 }
-    };
-
-    // Lista simulada de restaurantes
-    private List<RestauranteModel> restaurantes = new()
-    {
-        new RestauranteModel{ Id="1", Nome="Restaurante A" },
-        new RestauranteModel{ Id="2", Nome="Restaurante B" }
-    };
-
-    // Adiciona prato ao cardápio
-    private void AdicionarPratoAoCardapio(Guid id)
-    {
-        var prato = pratosDisponiveis.FirstOrDefault(x => x.Id == id);
-        if (prato == null) return;
-
-        if (!cardapio.Pratos.Any(x => x.Id == id))
-            cardapio.Pratos.Add(prato);
-    }
-
-    // Remove prato do cardápio
-    private void RemoverPratoDoCardapio(Guid id)
-    {
-        var prato = cardapio.Pratos.FirstOrDefault(x => x.Id == id);
-        if (prato != null)
-            cardapio.Pratos.Remove(prato);
-    }
-
-    // Verifica se prato já está no cardápio
-    private bool CardapioJaContem(Guid pratoId)
-        => cardapio.Pratos.Any(x => x.Id == pratoId);
-
-    // Salvar cardápio
-    private void SalvarCardapio()
-    {
-        Console.WriteLine("Cardápio salvo!");
+            cardapioDAO.Inserir(cardapio);
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes");
+        }
+        catch (Exception ex)
+        {
+            erro = ex.Message;
+        }
     }
 }

@@ -2,6 +2,9 @@
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @inject NavigationManager Nav
 @layout MainLayoutRestaurante
+@using RedRidersNew.Models
+@inject CardapioDAO cardapioDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Gerenciar Cardápios</PageTitle>
 
@@ -11,8 +14,8 @@
 
     <section class="mb-4">
         <div class="search-box d-flex gap-2">
-            <input type="text" class="form-control" placeholder="Pesquisar cardápios..." @bind="searchTerm" />
-            <button class="btn btn-search btn-secondary" @onclick="Buscar">Buscar</button>
+            <input type="text" class="form-control" placeholder="Pesquisar cardápios..."  />
+            <button class="btn btn-search btn-secondary">Buscar</button>
 
             <NavLink href="/restaurante/cadastro-cardapio"
                      class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
@@ -22,32 +25,35 @@
     </section>
 
     <div class="row g-4">
-        @foreach (var cardapio in Cardapios)
+        @foreach (var cardapio in listaCardapio)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="position-relative">
-                        <img class="card-img-top" src="@cardapio.Imagem" alt="@cardapio.Nome" />
-                        <div class="titulo-faixa">@cardapio.Nome</div>
+                        <img class="card-img-top"  alt="@cardapio.nome" />
+                        <div class="titulo-faixa">@cardapio.nome</div>
+                        <div class="titulo-faixa">@cardapio.descricao</div>
+
                     </div>
 
                     <div class="card-body text-center">
                         <div class="btn-group w-100 btn-soft-group">
-                            <NavLink href=$"/restaurante/editar-cardapio/{cardapio.Id}"
+                            <NavLink href=@("/restaurante/editar-cardapio/" + cardapio.Id)
                                      class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-pencil-square"></i>
                             </NavLink>
 
-                            <NavLink href=$"/restaurante/detalhes-cardapio/{cardapio.Id}"
+                            <NavLink href=@("/restaurante/detalhes-cardapio/" + cardapio.Id)
                                      class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-eye"></i>
                             </NavLink>
 
-
-                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
-                                    @onclick="() => Remover(cardapio.Id)">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <EditForm Model="@cardapio" OnSubmit="() => Excluir(cardapio.Id)" formname="@($"formExcluir_{cardapio.Id}")">
+                                <button type="submit" class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </EditForm>
+                            
                         </div>
                     </div>
                 </div>
@@ -57,45 +63,36 @@
 </div>
 
 @code {
-    private string searchTerm = "";
-    private List<CardapioModel> Cardapios { get; set; } = new();
+    private List<Cardapio> listaCardapio = new();
+
+    private string erro = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Cardapio cardapio { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        CarregarCardapios();
+        CarregarProdutos();
     }
 
-    private void CarregarCardapios()
+    private void CarregarProdutos()
     {
-        Cardapios = new List<CardapioModel>
-        {
-            new() { Id = 1, Nome = "Cardápio do Dia", Imagem = "https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif" },
-        };
+        listaCardapio = cardapioDAO.ListarTodos();
     }
 
-    private void Buscar()
+    private void Excluir(int id)
     {
-        if (string.IsNullOrWhiteSpace(searchTerm))
+        try
         {
-            CarregarCardapios();
-            return;
+            cardapioDAO.Excluir(id);
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes", true);
         }
-
-        Cardapios = Cardapios
-            .Where(c => c.Nome.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-    }
-
-    private void Remover(int id)
-    {
-        var item = Cardapios.FirstOrDefault(x => x.Id == id);
-        if (item != null) Cardapios.Remove(item);
-    }
-
-    public class CardapioModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Imagem { get; set; }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao excluir o restaurante: {ex.Message}";
+        }
     }
 }

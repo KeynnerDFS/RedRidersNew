@@ -1,6 +1,10 @@
 ﻿@page "/restaurante/gerenciar-pratos"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject PratosDAO pratosDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Gerenciar Pratos</PageTitle>
 
@@ -24,38 +28,75 @@
         <!-- CARD PRATO -->
         <div class="col-6 col-sm-6 col-md-5 col-lg-3">
             <div class="card shadow-sm border-0 h-100">
-                <div class="position-relative">
 
-                    <img class="card-img-top"
-                         src="https://i.pinimg.com/originals/d7/5c/ed/d75cedb1c4b89b6cc78341e24bfa4f03.gif"
-                         alt="Prato" />
+                @foreach (var pratos in listaPratos)
+                {
+                    <div class="position-relative">
 
-                    <!-- faixa do título -->
-                    <div class="titulo-faixa">
-                        Prato 1
+                        <!-- faixa do título -->
+                        <div class="titulo-faixa">
+                            @pratos.nome
+                        </div>
+
                     </div>
 
-                </div>
+                    <div class="card-body text-center">
 
-                <div class="card-body text-center">
+                        <div class="btn-group w-100 btn-soft-group">
+                            <NavLink href=@("/restaurante/editar-prato/" + pratos.Id) class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-pencil-square"></i>
+                            </NavLink>
 
-                    <div class="btn-group w-100 btn-soft-group">
-                        <NavLink href="restaurante/editar-prato" class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-pencil-square"></i>
-                        </NavLink>
+                            <NavLink href=@("/restaurante/detalhes-prato/" + pratos.Id) class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-eye"></i>
+                            </NavLink>
 
-                        <NavLink href="restaurante/detalhes-prato" class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-eye"></i>
-                        </NavLink>
+                            <EditForm Model="@pratos" OnSubmit="() => Excluir(pratos.Id)" formname="@($"formExcluir_{pratos.Id}")">
+                                <button type="submit" class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </EditForm>
+                        </div>
 
-                        <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
-                            <i class="bi bi-trash"></i>
-                        </button>
                     </div>
-
-                </div>
+                }
+                
             </div>
         </div>
     </div>
 
 </div>
+@code {
+    private List<Pratos> listaPratos = new();
+
+    private string erro = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Pratos pratos { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        CarregarProdutos();
+    }
+
+    private void CarregarProdutos()
+    {
+        listaPratos = pratosDAO.ListarTodos();
+    }
+
+    private void Excluir(int id)
+    {
+        try
+        {
+            pratosDAO.Excluir(id);
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes", true);
+        }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao excluir o restaurante: {ex.Message}";
+        }
+    }
+}

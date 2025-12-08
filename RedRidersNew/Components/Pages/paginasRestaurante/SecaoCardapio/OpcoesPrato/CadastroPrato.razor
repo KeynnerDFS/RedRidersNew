@@ -1,13 +1,17 @@
 ﻿@page "/restaurante/cadastro-prato"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject PratosDAO pratosDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Cadastrar Prato</PageTitle>
 
 <div class="container py-4">
     <NavBarCardapio />
 
-    <EditForm Model="@prato" OnValidSubmit="CadastrarPrato" class="card p-4 mb-4 shadow-sm">
+    <EditForm Model="@pratos" OnValidSubmit="Salvar" class="card p-4 mb-4 shadow-sm">
 
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -19,49 +23,28 @@
             <!-- Nome -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Nome do prato</label>
-                <InputText class="form-control" @bind-Value="prato.NomePrato" />
+                <InputText class="form-control" @bind-Value="pratos.nome" />
             </div>
 
-            <!-- Categoria -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Categoria</label>
-                <InputText class="form-control" @bind-Value="prato.CategoriaPrato" />
-            </div>
-
-            <!-- peso -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Peso / Litros</label>
-                <InputText class="form-control" @bind-Value="prato.QuantidadePrato" />
-            </div>
-
-            <!-- Descrição -->
-            <div class="col-12">
-                <label class="form-label fw-semibold">Ingredientes</label>
-                <InputTextArea class="form-control" rows="3" @bind-Value="prato.DescricaoPrato" />
-            </div>
-
-            <!-- Preço -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Preço</label>
-                <InputNumber class="form-control" @bind-Value="prato.PrecoPrato" />
-            </div>
-
-            <!-- Tamanho -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Tamanho / Porção</label>
-                <InputText class="form-control" @bind-Value="prato.TamanhoPrato" />
-            </div>
-
-            <!-- Imagem -->
             <div class="col-md-6">
-                <label class="form-label fw-semibold">URL da Imagem</label>
-                <InputText class="form-control" @bind-Value="prato.RotaImgPrato" />
+                <label class="form-label fw-semibold">Preço</label>
+                <InputNumber class="form-control" @bind-Value="pratos.preco" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Descrição</label>
+                <InputText class="form-control" @bind-Value="pratos.descricao" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Nº Cardapio</label>
+                <InputNumber class="form-control" @bind-Value="pratos.idCcarFk" />
             </div>
 
         </div>
 
         <div class="mt-4 text-end">
-            <button class="btn btn-soft-primary px-4">Cadastrar</button>
+            <button  type="submit" class="btn btn-soft-primary px-4">Cadastrar</button>
         </div>
 
     </EditForm>
@@ -70,23 +53,24 @@
 
 @code {
 
-    private Prato prato = new Prato();
+    private string? erro = null;
 
-    private void CadastrarPrato()
-    {
-        // TODO: salvar o prato no banco
-        Console.WriteLine("Prato cadastrado:");
-        Console.WriteLine(prato.NomePrato);
-    }
+    [SupplyParameterFromForm]
+    private Pratos? pratos { get; set; } = new();
 
-    public class Prato
+    private void Salvar()
     {
-        public string NomePrato { get; set; }
-        public string DescricaoPrato { get; set; }
-        public decimal PrecoPrato { get; set; }
-        public string RotaImgPrato { get; set; }
-        public string CategoriaPrato { get; set; }
-        public string TamanhoPrato { get; set; }
-        public string QuantidadePrato { get; set; }
+        try
+        {
+            if (string.IsNullOrWhiteSpace(pratos!.nome))
+                throw new Exception("O campo nome é obrigatório");
+
+            pratosDAO.Inserir(pratos);
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes");
+        }
+        catch (Exception ex)
+        {
+            erro = ex.Message;
+        }
     }
 }

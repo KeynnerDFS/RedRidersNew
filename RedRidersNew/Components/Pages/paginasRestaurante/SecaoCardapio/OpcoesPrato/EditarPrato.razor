@@ -1,13 +1,17 @@
 ﻿@page "/restaurante/editar-prato/{id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject PratosDAO pratosDAO;
+@inject NavigationManager Navigation
 
-<PageTitle>Editar Prato</PageTitle>
+<PageTitle>Editar Prato  - @pratos.Id</PageTitle>
 
 <div class="container py-4">
     <NavBarCardapio />
 
-    <EditForm Model="@prato" OnValidSubmit="SalvarEdicao" class="card p-4 mb-4 shadow-sm">
+    <EditForm Model="@pratos" OnValidSubmit="Salvar" class="card p-4 mb-4 shadow-sm">
 
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -19,49 +23,28 @@
             <!-- Nome -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Nome do prato</label>
-                <InputText class="form-control" @bind-Value="prato.NomePrato" />
+                <InputText class="form-control" @bind-Value="pratos.nome" />
             </div>
 
-            <!-- Categoria -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Categoria</label>
-                <InputText class="form-control" @bind-Value="prato.CategoriaPrato" />
-            </div>
-
-            <!-- peso -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Peso / Litros</label>
-                <InputText class="form-control" @bind-Value="prato.QuantidadePrato" />
-            </div>
-
-            <!-- Descrição -->
-            <div class="col-12">
-                <label class="form-label fw-semibold">Descrição</label>
-                <InputTextArea class="form-control" rows="3" @bind-Value="prato.DescricaoPrato" />
-            </div>
-
-            <!-- Preço -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Preço</label>
-                <InputNumber class="form-control" @bind-Value="prato.PrecoPrato" />
-            </div>
-
-            <!-- Tamanho -->
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Tamanho / Porção</label>
-                <InputText class="form-control" @bind-Value="prato.TamanhoPrato" />
-            </div>
-
-            <!-- Imagem -->
             <div class="col-md-6">
-                <label class="form-label fw-semibold">URL da Imagem</label>
-                <InputText class="form-control" @bind-Value="prato.RotaImgPrato" />
+                <label class="form-label fw-semibold">Preço</label>
+                <InputNumber class="form-control" @bind-Value="pratos.preco" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Descrição</label>
+                <InputText class="form-control" @bind-Value="pratos.descricao" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Nº Cardapio</label>
+                <InputNumber class="form-control" @bind-Value="pratos.idCcarFk" />
             </div>
 
         </div>
 
         <div class="mt-4 text-end">
-            <button class="btn btn-soft-primary px-4">Salvar</button>
+            <button type="submit" class="btn btn-soft-primary px-4">Salvar</button>
         </div>
 
     </EditForm>
@@ -70,42 +53,38 @@
 
 @code {
 
-    [Parameter]
-    public int id { get; set; }
+    private string erro = string.Empty;
 
-    private Prato prato = new Prato();
+    [Parameter]
+    public int Id { get; set; }
+
+    private Pratos pratos { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        // TODO: Buscar o prato por id no banco / API
-        // (dados de exemplo apenas)
-        prato = new Prato
+        var p = pratosDAO.BuscarPorId(Id);
+
+        if (p != null)
         {
-            NomePrato = "Exemplo",
-            CategoriaPrato = "Categoria X",
-            QuantidadePrato = "500g",
-            DescricaoPrato = "Descrição exemplo",
-            PrecoPrato = 29.90m,
-            TamanhoPrato = "Médio",
-            RotaImgPrato = "https://..."
-        };
+            pratos = p;
+        }
+        else
+        {
+            erro = "Produto não encontrado.";
+        }
     }
 
-    private void SalvarEdicao()
+    private void Salvar()
     {
-        // TODO: salvar no banco / API
-        Console.WriteLine("Prato editado:");
-        Console.WriteLine(prato.NomePrato);
-    }
+        try
+        {
+            pratosDAO.Atualizar(pratos);
 
-    public class Prato
-    {
-        public string NomePrato { get; set; }
-        public string DescricaoPrato { get; set; }
-        public decimal PrecoPrato { get; set; }
-        public string RotaImgPrato { get; set; }
-        public string CategoriaPrato { get; set; }
-        public string TamanhoPrato { get; set; }
-        public string QuantidadePrato { get; set; }
+            Navigation.NavigateTo("/restaurante/gerenciar-pratos");
+        }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao salvar: {ex.Message}";
+        }
     }
 }

@@ -1,86 +1,65 @@
 ﻿@page "/restaurante/detalhes-cardapio/{Id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject CardapioDAO cardapioDAO;
+@inject NavigationManager Navigation
 
-<PageTitle>Cardápio</PageTitle>
+<PageTitle>Cardápio - @cardapio.Id</PageTitle>
 
 <div class="menu-container py-5">
 
     <!-- Cabeçalho do Cardápio -->
     <div class="menu-header text-center mb-5">
-        <h1 class="menu-title display-4 fw-bold">@cardapio.Nome</h1>
-        <p class="menu-category text-muted fs-5">@cardapio.Categoria</p>
-        @if (!string.IsNullOrWhiteSpace(restauranteNome))
-        {
-            <p class="menu-subtitle text-secondary">• @restauranteNome •</p>
-        }
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Nome Cardapio</label>
+            <input class="form-control" @bind="cardapio.nome" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Numero do restaurante</label>
+            <input class="form-control" @bind="cardapio.idCresFk" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Descrição</label>
+            <input class="form-control" @bind="cardapio.descricao" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Nº Cardapio</label>
+            <input class="form-control" @bind="cardapio.Id" />
+        </div>
+
+
     </div>
 
-    <!-- Lista de Pratos -->
-    <div class="menu-section row row-cols-1 row-cols-md-2 g-4">
-        @foreach (var prato in cardapio.Pratos)
-        {
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    @if (!string.IsNullOrWhiteSpace(prato.Imagem))
-                    {
-                        <img src="@prato.Imagem" class="card-img-top" alt="@prato.Nome" style="height:200px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;" />
-                    }
-
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <h5 class="card-title fw-bold">@prato.Nome</h5>
-                            @if (!string.IsNullOrWhiteSpace(prato.Descricao))
-                            {
-                                <p class="card-text text-muted">@prato.Descricao</p>
-                            }
-                        </div>
-                        <div class="d-flex justify-content-end align-items-center mt-3">
-                            <span class="fw-semibold fs-5 text-primary">R$ @prato.Preco</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+    
 
 </div>
 
 @code {
-    [Parameter] public int Id { get; set; }
+   
+    private string erro = string.Empty;
 
-    private CardapioModel cardapio = new();
-    private string restauranteNome = "Meu Restaurante";
+    [Parameter]
+    public int Id { get; set; }
 
-    public class CardapioModel
-    {
-        public string Nome { get; set; }
-        public string Categoria { get; set; }
-        public List<PratoModel> Pratos { get; set; } = new();
-    }
-
-    public class PratoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public decimal Preco { get; set; }
-        public string Descricao { get; set; }
-        public string Imagem { get; set; } // URL da imagem do prato
-    }
+    [SupplyParameterFromForm]
+    private Cardapio cardapio { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        cardapio = new CardapioModel
-        {
-            Nome = $"Cardápio {Id}",
-            Categoria = "Pratos Principais",
-            Pratos = new List<PratoModel>
-        {
-            new PratoModel { Id = 1, Nome = "Lasanha Caseira", Preco = 28, Descricao = "Molho artesanal, queijo gratinado", Imagem="https://i.pinimg.com/736x/45/d0/f5/45d0f56ea06d8e33fb9b8007f1e881d6.jpg" },
-            new PratoModel { Id = 2, Nome = "Hambúrguer Artesanal", Preco = 22, Descricao = "Pão brioche, carne 150g, cheddar", Imagem="https://i.pinimg.com/736x/28/e2/4a/28e24a3fc9baf74a4d9affe18184ebe9.jpg" },
-            new PratoModel { Id = 3, Nome = "Macarrão ao Alho e Óleo", Preco = 18, Descricao = "Spaghetti, alho, azeite e cheiro verde", Imagem="https://i.pinimg.com/736x/1d/57/f3/1d57f3ae2d6ec0a391c130eeaf59fd38.jpg" }
-        }
-        };
-    }
+        var c = cardapioDAO.BuscarPorId(Id);
 
+        if (c != null)
+        {
+            cardapio = c;
+        }
+        else
+        {
+            erro = "Produto não encontrado.";
+        }
+    }
 }

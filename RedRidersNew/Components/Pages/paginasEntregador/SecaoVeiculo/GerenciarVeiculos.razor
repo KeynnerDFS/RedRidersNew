@@ -2,6 +2,9 @@
 @using RedRidersNew.Components.Layout.LayoutEntregador
 @inject NavigationManager Nav
 @layout MainLayoutEntregador
+@using RedRidersNew.Models
+@inject VeiculoDAO veiculoDAO;
+@inject NavigationManager Navigation
 
 <PageTitle>Gerenciar Veículos</PageTitle>
 
@@ -11,8 +14,8 @@
 
     <section class="mb-4">
         <div class="search-box d-flex gap-2">
-            <input type="text" class="form-control" placeholder="Pesquisar veículos..." @bind="searchTerm" />
-            <button class="btn btn-search btn-secondary" @onclick="Buscar">Buscar</button>
+            <input type="text" class="form-control" placeholder="Pesquisar veículos..."  />
+            <button class="btn btn-search btn-secondary" >Buscar</button>
 
             <NavLink href="/entregador/cadastro-veiculo"
                      class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
@@ -22,30 +25,31 @@
     </section>
 
     <div class="row g-4">
-        @foreach (var veiculo in Veiculos)
+        @foreach (var veiculo in listaVeiculo)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="card shadow-sm border-0 h-100">
-                    <img class="card-img-top" src="@veiculo.Imagem" alt="@veiculo.Nome" />
+                    <img class="card-img-top" src="@veiculo.rotaimg" alt="@veiculo.nome" />
                     <div class="card-body text-center">
-                        <h5 class="fw-bold">@veiculo.Nome</h5>
-                        <p class="text-muted">@veiculo.Modelo</p>
+                        <h5 class="fw-bold">@veiculo.nome</h5>
+                        <p class="text-muted">@veiculo.modelo</p>
 
                         <div class="btn-group w-100 mt-2">
-                            <NavLink href=$"/entregador/editar-veiculo/{veiculo.Id}"
+                            <NavLink href="@($"/entregador/editar-veiculo/{veiculo.Id}")"
                                      class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-pencil-square"></i>
                             </NavLink>
 
-                            <NavLink href=$"/entregador/detalhes-veiculo/{veiculo.Id}"
+                            <NavLink href="@($"/entregador/detalhes-veiculo/{veiculo.Id}")"
                                      class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-eye"></i>
                             </NavLink>
 
-                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
-                                    @onclick="() => Remover(veiculo.Id)">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <EditForm Model="@veiculo" OnSubmit="() => Excluir(veiculo.Id)" formname="@($"formExcluir_{veiculo.Id}")">
+                                <button type="submit" class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </EditForm>
                         </div>
                     </div>
                 </div>
@@ -55,48 +59,36 @@
 </div>
 
 @code {
-    private string searchTerm = "";
-    private List<VeiculoModel> Veiculos { get; set; } = new();
+    private List<Veiculo> listaVeiculo = new();
+
+    private string erro = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Veiculo veiculo { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        CarregarVeiculos();
+        CarregarProdutos();
     }
 
-    private void CarregarVeiculos()
+    private void CarregarProdutos()
     {
-        Veiculos = new List<VeiculoModel>
-        {
-            new() { Id = 1, Nome = "Moto 125cc", Modelo = "Honda CG", Imagem = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg" },
-            new() { Id = 2, Nome = "Carro Popular", Modelo = "Fiat Uno", Imagem = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg" },
-        };
+        listaVeiculo = veiculoDAO.ListarTodos();
     }
 
-    private void Buscar()
+    private void Excluir(int id)
     {
-        if (string.IsNullOrWhiteSpace(searchTerm))
+        try
         {
-            CarregarVeiculos();
-            return;
+            veiculoDAO.Excluir(id);
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes", true);
         }
-
-        Veiculos = Veiculos
-            .Where(v => v.Nome.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        v.Modelo.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-    }
-
-    private void Remover(int id)
-    {
-        var item = Veiculos.FirstOrDefault(x => x.Id == id);
-        if (item != null) Veiculos.Remove(item);
-    }
-
-    public class VeiculoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Modelo { get; set; }
-        public string Imagem { get; set; }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao excluir o restaurante: {ex.Message}";
+        }
     }
 }

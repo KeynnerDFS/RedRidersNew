@@ -1,8 +1,12 @@
 ﻿@page "/restaurante/editar-cardapio/{Id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
+@rendermode InteractiveServer
+@using RedRidersNew.Models
+@inject CardapioDAO cardapioDAO;
+@inject NavigationManager Navigation
 
-<PageTitle>Editar Cardápio</PageTitle>
+<PageTitle>Editar Cardápio - @cardapio.Id</PageTitle>
 
 <div class="container py-4">
     <NavBarCardapio />
@@ -10,135 +14,67 @@
     <div class="card shadow-sm p-4 mb-4">
         <h4 class="mb-3">Editar Cardápio</h4>
 
-        <EditForm Model="@cardapio" OnValidSubmit="SalvarAlteracoes">
+        <EditForm Model="@cardapio" OnValidSubmit="Salvar">
             <DataAnnotationsValidator />
 
             <div class="mb-3">
                 <label class="form-label">Nome do Cardápio</label>
-                <InputText class="form-control" @bind-Value="cardapio.Nome" />
+                <InputText class="form-control" @bind-Value="cardapio.nome" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Categoria</label>
-                <InputText class="form-control" @bind-Value="cardapio.Categoria" />
+                <InputText class="form-control" @bind-Value="cardapio.descricao" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Estabelecimento</label>
-                <select class="form-select" @bind="cardapio.RestauranteId">
-                    <option value="">Selecione...</option>
-                    @foreach (var rest in restaurantes)
-                    {
-                        <option value="@rest.Id">@rest.Nome</option>
-                    }
-                </select>
+                <label class="form-label">Nº Restaurante</label>
+                <InputNumber class="form-control" @bind-Value="cardapio.idCresFk" />
             </div>
 
-            <button class="btn btn-primary px-4">Salvar</button>
+
+            <button type="submit" class="btn btn-primary px-4">Salvar</button>
         </EditForm>
     </div>
 
-    <div class="card shadow-sm p-4 mb-4">
-        <h4 class="mb-3">Pratos Disponíveis</h4>
-
-        @foreach (var prato in pratosDisponiveis)
-        {
-            <div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2">
-                <div><strong>@prato.Nome</strong> — R$ @prato.Preco</div>
-                <button class="btn btn-success btn-sm" @onclick="() => AdicionarPrato(prato.Id)" disabled="@JaTem(prato.Id)">Adicionar</button>
-            </div>
-        }
-    </div>
-
-    <div class="card shadow-sm p-4">
-        <h4 class="mb-3">Pratos do Cardápio</h4>
-        @if (cardapio.Pratos.Count == 0)
-        {
-            <p class="text-muted">Nenhum prato adicionado.</p>
-        }
-        else
-        {
-            <ul class="list-group">
-                @foreach (var prato in cardapio.Pratos)
-                {
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div><strong>@prato.Nome</strong> — R$ @prato.Preco</div>
-                        <button class="btn btn-danger btn-sm" @onclick="() => RemoverPrato(prato.Id)">Remover</button>
-                    </li>
-                }
-            </ul>
-        }
-    </div>
+   
 </div>
 
 @code {
-    [Parameter] public int Id { get; set; }
+    private string erro = string.Empty;
 
-    private CardapioModel cardapio = new();
+    [Parameter]
+    public int Id { get; set; }
 
-    public class CardapioModel
-    {
-        public string Nome { get; set; }
-        public string Categoria { get; set; }
-        public string RestauranteId { get; set; }
-        public List<PratoModel> Pratos { get; set; } = new();
-    }
-
-    public class PratoModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public decimal Preco { get; set; }
-    }
-
-    public class RestauranteModel
-    {
-        public string Id { get; set; }
-        public string Nome { get; set; }
-    }
-
-    private List<RestauranteModel> restaurantes = new()
-    {
-        new RestauranteModel { Id = "1", Nome = "Restaurante A" },
-        new RestauranteModel { Id = "2", Nome = "Restaurante B" },
-    };
-
-    private List<PratoModel> pratosDisponiveis = new()
-    {
-        new PratoModel{ Id = 1, Nome="X-Salada", Preco=15 },
-        new PratoModel{ Id = 2, Nome="Pizza Média", Preco=30 },
-        new PratoModel{ Id = 3, Nome="Lasanha", Preco=25 }
-    };
+    [SupplyParameterFromForm]
+    private Cardapio cardapio { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        // Carregamento simples pelo ID
-        cardapio = new CardapioModel
+        var c = cardapioDAO.BuscarPorId(Id);
+
+        if (c != null)
         {
-            Nome = $"Cardápio {Id}",
-            Categoria = "Almoço",
-            RestauranteId = "1",
-            Pratos = new List<PratoModel> { pratosDisponiveis[0] }
-        };
+            cardapio = c;
+        }
+        else
+        {
+            erro = "Produto não encontrado.";
+        }
     }
 
-    private void AdicionarPrato(int id)
+    private void Salvar()
     {
-        var prato = pratosDisponiveis.FirstOrDefault(p => p.Id == id);
-        if (prato != null && !cardapio.Pratos.Any(p => p.Id == id))
-            cardapio.Pratos.Add(prato);
-    }
+        try
+        {
+            cardapioDAO.Atualizar(cardapio);
 
-    private void RemoverPrato(int id)
-    {
-        var prato = cardapio.Pratos.FirstOrDefault(p => p.Id == id);
-        if (prato != null) cardapio.Pratos.Remove(prato);
-    }
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes");
+        }
+        catch (Exception ex)
+        {
+            erro = $"Erro ao salvar: {ex.Message}";
+        }
 
-    private bool JaTem(int id) => cardapio.Pratos.Any(p => p.Id == id);
-
-    private void SalvarAlteracoes()
-    {
-        Console.WriteLine($"Cardápio {Id} atualizado!");
     }
 }
